@@ -1,0 +1,27 @@
+{
+  "name": "damage-prompt-generator",
+  "version": "1.0.0",
+  "description": "AI-powered damage prompt generator using Groq API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "serve": "node server.js"
+  },
+  "keywords": [
+    "ai",
+    "prompt",
+    "image-generation",
+    "damage",
+    "groq"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "open": "^9.1.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}
