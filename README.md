@@ -1,62 +1,46 @@
-🎨 Damage Prompt Generator — Setup & Run
-Small web app that analyzes an uploaded image (using the Groq vision API) and generates realistic, randomized "damage" prompts (cracks, erosion, burn, dents, holes) you can paste into image generators.
+# 🔍 Damage Verification Assistant
 
-Requirements
-Browser (Chrome/Firefox/Edge)
-One of: Node.js (>=12) or Python 3
-(Optional) Groq API key to enable AI analysis
-Quick: open directly
-Open damage-prompt-generator.html in your browser (double-click or right‑click → Open with → Browser). This works without running a local server but some browsers restrict file APIs when opened from file://.
+A Streamlit app that helps a returns/claims reviewer evaluate product photos
+submitted with damage claims. Upload a photo of a delivered product and a vision
+model produces an objective assessment:
 
-Run as a local server (recommended)
-Node (recommended if you have Node):
+1. **Product** — type, brand, packaging
+2. **Visible damage** — itemized, with locations
+3. **Severity** — None / Minor / Moderate / Severe
+4. **Consistency** — does the damage look like genuine shipping/handling damage, a
+   manufacturing defect, or normal wear? (advisory — it cannot definitively detect
+   photo manipulation)
+5. **Recommendation** — Approve / Send to human review / Request more evidence
+6. **Confidence** — and what would raise it
 
-npm install
-npm start
-This runs server.js and serves the project at:
+> This is **decision support for a human reviewer**. It does not make automated
+> approval decisions and cannot prove an image is authentic or edited. Treat every
+> output as advisory.
 
-http://localhost:8000/damage-prompt-generator.html
-Python (quick static server):
+## Multi-provider
 
-# from project root
-python -m http.server 8000
-# or, to match included run.bat, use 8080
-python -m http.server 8080
-Then open:
+Pick your provider in the sidebar and paste your own API key (used only for your
+request, never stored):
 
-http://localhost:8000/damage-prompt-generator.html
-http://localhost:8080/damage-prompt-generator.html
-Python server script (automatically opens browser):
+| Provider | Default model | Get a key |
+|----------|---------------|-----------|
+| Anthropic (Claude) | `claude-opus-4-8` | console.anthropic.com |
+| OpenAI | `gpt-4o` | platform.openai.com |
+| Groq | `meta-llama/llama-4-scout-17b-16e-instruct` | console.groq.com |
 
-python server.py
-# opens http://localhost:8000/damage-prompt-generator.html
-Windows helper:
+You can also type a custom model id.
 
-run.bat
-# This runs: python -m http.server 8080
-Get a Groq API Key (optional but enables AI analysis)
-Create an account at https://console.groq.com
-Create an API key in the dashboard
-Paste the key into the top API Key field in the app UI
-How to use the UI
-Paste your Groq API key (optional)
-Upload an image (JPG/PNG recommended, <5MB)
-Click "Generate" — the app analyzes the image and produces a damage prompt
-Click "Copy to Clipboard" and paste into your image generator
-File Summary (project root)
-damage-prompt-generator.html
-package.json
-server.js          ← Node static server (http://localhost:8000)
-server.py          ← Python server (http://localhost:8000)
-run.bat            ← Windows helper (starts HTTP server on 8080)
-README_2.md        ← This file
-VSCODE_QUICKSTART.md
-Troubleshooting
-"API Error": verify your Groq API key and internet connection
-Image not loading: try JPG/PNG and smaller file sizes
-Node errors: run npm install then npm start
-Python errors: ensure python --version shows Python 3
-Notes
-server.js uses port 8000 and will attempt to open your browser automatically
-run.bat launches a Python simple server on port 8080 (Windows convenience)
-Enjoy creating realistic damage prompts! 🎨
+## Run locally
+
+```bash
+pip install -r requirements.txt
+streamlit run streamlit_app.py
+```
+
+## Deploy on Streamlit Cloud
+
+1. Push this repo to GitHub.
+2. On share.streamlit.io, set **Main file path** to `streamlit_app.py`.
+3. Reboot the app.
+
+`requirements.txt` installs `streamlit`, `anthropic`, and `openai`.
